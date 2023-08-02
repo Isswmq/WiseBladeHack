@@ -13,7 +13,7 @@ public class Fullbright extends Module {
 
     @Override
     public void onEnabled() {
-        mc.player.addEffect(new EffectInstance(Effects.NIGHT_VISION, 9999999, 255, true, true));
+        mc.player.addEffect(new EffectInstance(Effects.NIGHT_VISION, 9999999, 1, true, true));
     }
 
     @Override

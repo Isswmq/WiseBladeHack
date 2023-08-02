@@ -15,6 +15,10 @@ out
 
 README.txt
 LICENSE.txt
+changelog.txt
+.gitattributes
+CREDITS.txt
+logs
 # gradle
 build
 .gradle

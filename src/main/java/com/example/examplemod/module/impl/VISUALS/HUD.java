@@ -27,15 +27,15 @@ public class HUD extends Module {
             case TEXT:
                 MatrixStack matrices = event.getMatrixStack();
                 if(event.getType() == RenderGameOverlayEvent.ElementType.TEXT){
-                    int y = 10;
+                    int y = 11;
                     final int[] counter = {1};
                     Client.modules.sort(Comparator.comparingInt((Module m) -> mc.font.width(m.getName())).reversed());
                     for(Module module : Client.modules){
                         if(module.toggled){
                             int color = rainbow(counter[0] * 10);
-                            Shadow.drawShadow(8, y,10, mc.font.width(module.getName()) + 15);
+                            Shadow.drawShadow(8, y,11, mc.font.width(module.getName()) + 15);
                             StyledFontRenderer.drawString(matrices, font, module.getName(), 10, y, new Color(color));
-                            y += 10;
+                            y += 11;
                             counter[0]++;
                         }
                     }
@@ -46,8 +46,7 @@ public class HUD extends Module {
     }
 
     public static int rainbow(int delay) {
-        double rainbowState = Math.ceil((System.currentTimeMillis() + delay) / 20.0);
-        rainbowState %= 360;
-        return Color.getHSBColor((float) (rainbowState / 360.0f), 0.5f, 1f).getRGB();
+        double rainbowState = (Math.ceil((System.currentTimeMillis() + delay) / 10.0) % 360);
+        return Color.getHSBColor((float) (rainbowState / 360.0f), 1f, 1f).getRGB();
     }
 }

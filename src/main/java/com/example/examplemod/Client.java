@@ -5,12 +5,7 @@ import com.example.examplemod.module.impl.PLAYER.AutoRespawn;
 import com.example.examplemod.module.impl.MOVEMENT.Sprint;
 import com.example.examplemod.module.impl.PLAYER.*;
 import com.example.examplemod.module.impl.PLAYER.AutoLeave;
-import com.example.examplemod.module.impl.VISUALS.Fullbright;
-import com.example.examplemod.module.impl.VISUALS.GlowEsp;
-import com.example.examplemod.module.impl.VISUALS.ChestEsp;
-import com.example.examplemod.module.impl.VISUALS.FogColor;
-import com.example.examplemod.module.impl.VISUALS.Tracers;
-import com.example.examplemod.module.impl.VISUALS.HUD;
+import com.example.examplemod.module.impl.VISUALS.*;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -39,6 +34,8 @@ public class Client {
         modules.add(new DeathCord());
         modules.add(new FogColor());
         modules.add(new Cord());
+        modules.add(new FPS());
+        modules.add(new SelfDestruct());
     }
 
     public static void keyPress(int key, int action){

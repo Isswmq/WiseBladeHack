@@ -7,5 +7,4 @@ public class BlockReach extends Module {
     public BlockReach(){
         super("BlockReach", 0, Category.COMBAT);
     }
-
 }
