@@ -9,8 +9,10 @@ import com.example.examplemod.Utils.template.styled.StyledFontRenderer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 
+import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Panel {
@@ -33,6 +35,8 @@ public class Panel {
 
         int y1 = y + height;
 
+        Client.modules.sort(Comparator.comparingInt((Module m) -> mc.font.width(m.getName())).reversed());
+
         for (Module module : Client.modules) {
             if (module.category == category) {
                 buttons.add(new Button(x, y1, width, height, module));
@@ -41,7 +45,7 @@ public class Panel {
         }
     }
 
-    public void drawScreen(MatrixStack m, int mouseX, int mouseY, float partialTicks) {
+    public void drawScreen(@Nonnull MatrixStack m, int mouseX, int mouseY, float partialTicks) {
         if (dragging) {
             x = mouseX - dragX;
             y = mouseY - dragY;

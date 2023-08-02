@@ -8,6 +8,7 @@ import com.example.examplemod.Utils.template.styled.StyledFontRenderer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 
+import javax.annotation.Nonnull;
 import java.awt.*;
 
 public class Button {
@@ -26,7 +27,7 @@ public class Button {
         this.module = module;
     }
 
-    public void drawScreen(MatrixStack m, int mouseX, int mouseY, float partialTicks) {
+    public void drawScreen(@Nonnull MatrixStack m, int mouseX, int mouseY, float partialTicks) {
         StyledFontRenderer.drawString(m, font, binding ? "{Bind}" : module.name, x + 20, y + height / 2 - 9 / 2, module.toggled ? new Color(0x9F2FF6) : new Color(0xFFFFFF));
     }
 

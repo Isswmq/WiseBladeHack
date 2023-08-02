@@ -5,6 +5,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class MainGui extends Screen {
         for (Module.Category value : Module.Category.values()) {
 
             if(value.equals(Module.Category.COMBAT)){
-                panels.add(new Panel(10, 10, 100, 12, value));
+                panels.add(new Panel(10, 10, 110, 12, value));
             }
 
             if(value.equals(Module.Category.MOVEMENT)){
@@ -28,11 +29,11 @@ public class MainGui extends Screen {
             }
 
             if(value.equals(Module.Category.VISUALS)){
-                panels.add(new Panel(130, 10, 100, 12, value));
+                panels.add(new Panel(140, 10, 100, 12, value));
             }
 
             if(value.equals(Module.Category.PLAYER)){
-                panels.add(new Panel(250, 10, 120, 12, value));
+                panels.add(new Panel(260, 10, 120, 12, value));
             }
         }
     }
@@ -87,7 +88,7 @@ public class MainGui extends Screen {
     }
 
     @Override
-    public void render(MatrixStack m, int x, int y, float partialTicks) {
+    public void render(@Nonnull MatrixStack m, int x, int y, float partialTicks) {
         this.renderBackground(m);
         for (Panel panel : panels) {
             panel.drawScreen(m, x, y, partialTicks);

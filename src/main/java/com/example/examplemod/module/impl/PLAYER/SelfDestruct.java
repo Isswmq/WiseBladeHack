@@ -6,11 +6,16 @@ import net.minecraft.client.Minecraft;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SelfDestruct extends Module {
 
     public static boolean panic;
     private static File file = new File(Minecraft.getInstance().gameDirectory, "options.json");
+
+    private HashMap<Module, Integer> disabledModules = new HashMap<>();
+
 
     public SelfDestruct() {
         super("Self Destruct", 0, Category.PLAYER);
@@ -34,15 +39,24 @@ public class SelfDestruct extends Module {
         if(file.exists()){
             file.delete();
         }
+
+        Client.modules.stream()
+                        .filter(module -> disabledModules.containsKey(module))
+                        .forEach(module -> {
+                            module.toggle();
+                            module.setKeyCode(disabledModules.get(module));
+                        });
+
         panic = false;
     }
 
-    public static void offModules(){
+    private void offModules(){
         for (Module module : Client.modules){
             if(module.toggled){
                 if(!module.name.equals("Self Destruct")){
+                    disabledModules.put(module, module.getKey());
                     module.toggle();
-                    module.keyCode = 99999;
+                    module.keyCode = 9999;
                 }
             }
         }
