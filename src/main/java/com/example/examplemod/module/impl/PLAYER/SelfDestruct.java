@@ -6,14 +6,12 @@ import net.minecraft.client.Minecraft;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SelfDestruct extends Module {
 
     public static boolean panic;
     private static File file = new File(Minecraft.getInstance().gameDirectory, "options.json");
-
     private HashMap<Module, Integer> disabledModules = new HashMap<>();
 
 
