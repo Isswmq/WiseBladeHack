@@ -36,6 +36,7 @@ public class Client {
         modules.add(new Cord());
         modules.add(new FPS());
         modules.add(new SelfDestruct());
+        modules.add(new AimAssist());
     }
 
     public static void keyPress(int key, int action){
