@@ -1,59 +1,53 @@
 package com.example.examplemod.module.impl.PLAYER;
 
-import com.example.examplemod.ExampleMod;
 import com.example.examplemod.Module;
-import com.example.examplemod.module.impl.packet.ElytraSwapPacket;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ArmorItem;
+import net.minecraft.client.multiplayer.PlayerController;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ElytraItem;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ElytraSwap extends Module {
+    private boolean state;
+    private int slot;
     public ElytraSwap() {
         super("ElytraSwap", 0, Category.PLAYER);
     }
 
-    @Override
-    public void onEnabled() {
-        if (mc.player != null) {
-            IInventory inventory = mc.player.inventory;
-            ItemStack elytra = null;
-            for (int i = 0; i < inventory.getContainerSize(); i++) {
-                ItemStack stack = inventory.getItem(i);
-                if (stack.getItem() instanceof ElytraItem && i == 8) {
-                    elytra = stack;
-                    break;
+    @SubscribeEvent
+    public void onKeyInput(InputEvent.KeyInputEvent event) {
+        if(event.getKey() == keyCode){
+            if (mc.player != null) {
+                PlayerController controller = new PlayerController(mc, mc.player.connection);
+                state = !state;
+                if(state){
+                    int elytraIndex = findElytra();
+                    System.out.println(elytraIndex);
+                    if(elytraIndex >= 0){
+                        controller.handleInventoryMouseClick(0,elytraIndex,0, ClickType.PICKUP, mc.player);
+                        controller.handleInventoryMouseClick(0,6,0, ClickType.PICKUP, mc.player);
+                        controller.handleInventoryMouseClick(0,elytraIndex,0, ClickType.PICKUP, mc.player);
+                    }
+                    slot = elytraIndex;
+                }else {
+                    if(slot >= 0){
+                        controller.handleInventoryMouseClick(0,slot,0, ClickType.PICKUP, mc.player);
+                        controller.handleInventoryMouseClick(0,6,0, ClickType.PICKUP, mc.player);
+                        controller.handleInventoryMouseClick(0,slot,0, ClickType.PICKUP, mc.player);
+                    }
+                    slot = -1;
                 }
-            }
-
-            if (elytra != null) {
-                ElytraSwapPacket swapPacket = new ElytraSwapPacket(8, 2);
-                ExampleMod.CHANNEL.send(PacketDistributor.SERVER.noArg(), swapPacket);
             }
         }
     }
 
-    @Override
-    public void onDisable() {
-        if (mc.player != null) {
-            IInventory inventory = mc.player.inventory;
-
-            ItemStack chestplate = null;
-            for (int i = 0; i < inventory.getContainerSize(); i++) {
-                ItemStack stack = inventory.getItem(i);
-                if (stack.getItem() instanceof ArmorItem && i == 8) {
-                    chestplate = stack;
-                    break;
-                }
-            }
-
-            if (chestplate != null) {
-                ElytraSwapPacket swapPacket = new ElytraSwapPacket(8, 2);
-                ExampleMod.CHANNEL.send(PacketDistributor.SERVER.noArg(), swapPacket);
-                //mc.player.containerMenu.broadcastChanges();
-                //mc.player.tick();
+    private int findElytra(){
+        for (Slot slot : mc.player.inventoryMenu.slots){
+            if(slot.getItem().getItem() instanceof  ElytraItem){
+                return slot.index;
             }
         }
+        return -1;
     }
 }
