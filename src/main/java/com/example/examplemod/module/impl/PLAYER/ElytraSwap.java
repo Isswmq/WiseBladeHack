@@ -1,10 +1,13 @@
 package com.example.examplemod.module.impl.PLAYER;
 
+import com.example.examplemod.ExampleMod;
 import com.example.examplemod.Module;
+import com.example.examplemod.module.impl.packet.ElytraSwapPacket;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 public class ElytraSwap extends Module {
     public ElytraSwap() {
@@ -15,7 +18,6 @@ public class ElytraSwap extends Module {
     public void onEnabled() {
         if (mc.player != null) {
             IInventory inventory = mc.player.inventory;
-
             ItemStack elytra = null;
             for (int i = 0; i < inventory.getContainerSize(); i++) {
                 ItemStack stack = inventory.getItem(i);
@@ -26,11 +28,8 @@ public class ElytraSwap extends Module {
             }
 
             if (elytra != null) {
-                ItemStack armor = mc.player.inventory.armor.get(2);
-                mc.player.inventory.armor.set(2, elytra);
-                mc.player.inventory.items.set(8, armor);
-                mc.player.containerMenu.broadcastChanges();
-                mc.player.tick();
+                ElytraSwapPacket swapPacket = new ElytraSwapPacket(8, 2);
+                ExampleMod.CHANNEL.send(PacketDistributor.SERVER.noArg(), swapPacket);
             }
         }
     }
@@ -50,13 +49,11 @@ public class ElytraSwap extends Module {
             }
 
             if (chestplate != null) {
-                ItemStack elytra = mc.player.inventory.armor.get(2);
-                mc.player.inventory.armor.set(2, chestplate);
-                mc.player.inventory.items.set(8, elytra);
-                mc.player.inventoryMenu.broadcastChanges();
-                mc.player.tick();
+                ElytraSwapPacket swapPacket = new ElytraSwapPacket(8, 2);
+                ExampleMod.CHANNEL.send(PacketDistributor.SERVER.noArg(), swapPacket);
+                //mc.player.containerMenu.broadcastChanges();
+                //mc.player.tick();
             }
-
         }
     }
 }
