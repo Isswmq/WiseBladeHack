@@ -4,9 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 
 public class Module {
-    public String name;
-    public boolean toggled;
-    public int keyCode;
+    private final String name;
+    private boolean toggled;
+    private int keyCode;
+
     public Category category;
     public Minecraft mc = Minecraft.getInstance();
 

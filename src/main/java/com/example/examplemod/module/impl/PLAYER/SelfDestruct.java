@@ -50,11 +50,11 @@ public class SelfDestruct extends Module {
 
     private void offModules(){
         for (Module module : Client.modules){
-            if(module.toggled){
-                if(!module.name.equals("Self Destruct")){
+            if(module.isToggled()){
+                if(!module.getName().equals("Self Destruct")){
                     disabledModules.put(module, module.getKey());
                     module.toggle();
-                    module.keyCode = 9999;
+                    module.setKeyCode(9999);
                 }
             }
         }

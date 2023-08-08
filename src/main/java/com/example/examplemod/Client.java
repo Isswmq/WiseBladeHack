@@ -37,6 +37,7 @@ public class Client {
         modules.add(new FPS());
         modules.add(new SelfDestruct());
         modules.add(new AimAssist());
+        modules.add(new AutoFireworks());
     }
 
     public static void keyPress(int key, int action){

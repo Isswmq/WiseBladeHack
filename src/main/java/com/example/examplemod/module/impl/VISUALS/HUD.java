@@ -31,7 +31,7 @@ public class HUD extends Module {
                     final int[] counter = {1};
                     Client.modules.sort(Comparator.comparingInt((Module m) -> mc.font.width(m.getName())).reversed());
                     for(Module module : Client.modules){
-                        if(module.toggled){
+                        if(module.isToggled()){
                             int color = rainbow(counter[0] * 10);
                             Shadow.drawShadow(8, y,11, mc.font.width(module.getName()) + 15);
                             StyledFontRenderer.drawString(matrices, font, module.getName(), 10, y, new Color(color));

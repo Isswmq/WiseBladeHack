@@ -17,19 +17,20 @@ public class ElytraSwap extends Module {
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        if(event.getKey() == keyCode){
+        if(event.getKey() == getKey()){
             if (mc.player != null) {
                 PlayerController controller = new PlayerController(mc, mc.player.connection);
                 state = !state;
                 if(state){
-                    int elytraIndex = findElytra();
-                    System.out.println(elytraIndex);
-                    if(elytraIndex >= 0){
-                        controller.handleInventoryMouseClick(0,elytraIndex,0, ClickType.PICKUP, mc.player);
-                        controller.handleInventoryMouseClick(0,6,0, ClickType.PICKUP, mc.player);
-                        controller.handleInventoryMouseClick(0,elytraIndex,0, ClickType.PICKUP, mc.player);
+                    if(!(mc.player.inventory.armor.get(2).getItem() instanceof ElytraItem)){
+                        int elytraIndex = findElytra();
+                        if(elytraIndex >= 0){
+                            controller.handleInventoryMouseClick(0,elytraIndex,0, ClickType.PICKUP, mc.player);
+                            controller.handleInventoryMouseClick(0,6,0, ClickType.PICKUP, mc.player);
+                            controller.handleInventoryMouseClick(0,elytraIndex,0, ClickType.PICKUP, mc.player);
+                        }
+                        slot = elytraIndex;
                     }
-                    slot = elytraIndex;
                 }else {
                     if(slot >= 0){
                         controller.handleInventoryMouseClick(0,slot,0, ClickType.PICKUP, mc.player);

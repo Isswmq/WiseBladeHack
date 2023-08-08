@@ -28,12 +28,12 @@ public class Button {
     }
 
     public void drawScreen(@Nonnull MatrixStack m, int mouseX, int mouseY, float partialTicks) {
-        StyledFontRenderer.drawString(m, font, binding ? "{Bind}" : module.name, x + 20, y + height / 2 - 9 / 2, module.toggled ? new Color(0x9F2FF6) : new Color(0xFFFFFF));
+        StyledFontRenderer.drawString(m, font, binding ? "{Bind}" : module.getName(), x + 20, y + height / 2 - 9 / 2, module.isToggled() ? new Color(0x9F2FF6) : new Color(0xFFFFFF));
     }
 
     protected void keyTyped(int keyCode) {
         if (binding) {
-            module.keyCode = keyCode;
+            module.setKeyCode(keyCode);
             binding = false;
         }
     }
